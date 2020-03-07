@@ -1,5 +1,8 @@
+CLOSENESS_MODIFIER = 8
+
+
 class Monster:
-    def __init__(self, name, cr, type, alignment, hp, speed, str, dex, con, int, wis, cha):
+    def __init__(self, name, cr, type, alignment, hp, speed, str, dex, con, int, wis, cha, senses, ac, abilities, actions):
         self.name = name
         self.type = type
         self.cr = cr
@@ -12,12 +15,18 @@ class Monster:
         self.int = int
         self.wis = wis
         self.cha = cha
+        self.senses = senses
         self.close = 100
+        self.ac = ac
+        self.abilities = abilities
+        self.actions = actions
 
     # Measures how "close" you are to a monster
     def closeness(self, str, dex, con, int, wis, cha):
-        x = abs(str - self.str) ** 2 + abs(self.dex - dex) ** 2 + abs(self.con - con) ** 2 + abs(
-            self.int - int) ** 2 + abs(self.wis - wis) ** 2 + abs(self.con - con) ** 2
+        x = abs(str - self.str) ** CLOSENESS_MODIFIER + abs(self.dex - dex) ** CLOSENESS_MODIFIER + abs(
+            self.con - con) ** CLOSENESS_MODIFIER + abs(
+            self.int - int) ** CLOSENESS_MODIFIER + abs(self.wis - wis) ** CLOSENESS_MODIFIER + abs(
+            self.con - con) ** CLOSENESS_MODIFIER
         return x
 
     def __str__(self):
