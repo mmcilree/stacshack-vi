@@ -38,19 +38,28 @@ def make_measurements(frontpath, sidepath, name):
     global image, currentWindow, clone
     # load the image, clone it, and setup the mouse callback function
 
-    front_measurements = ["height",
-                    "waist",
-                    "shoulders",
-                    "neck",
-                    "chest",
-                    "thigh"]
+    front_measurements = {"height" : "full height",
+                    "waist": "waist width",
+                    "shoulders": "shoulder with",
+                    "neck": "neck width",
+                    "chest": "chest width",
+                    "thigh": "thigh width",
+                    "torso":"torso width"}
 
-    side_measurements = ["bicep",
-                          "forearm",
-                          "calf", "abdomen"]
+    side_measurements = { "shoulderDepth": "shoulder width",
+                          "coreDepth": "core width",
+                          "bicep": "bicep width",
+                          "forearm": "forearm width",
+                          "calf": "calf width",
+                          "thighDepth": "thigh width",
+                          "gluteDepth": "glute width",
+                          "chest": "chest width",
+                           }
 
     f = open("../JSON/" + name + ".json", "w")
     f.write("{")
+
+    f.write("  \"name\": " + "\"" + name + "\",\n")
 
     image = cv2.imread(frontpath)
     scale_percent = 20  # percent of original size
@@ -79,8 +88,8 @@ def make_measurements(frontpath, sidepath, name):
 
 def measure_image(f, front_measurements):
     global currentWindow, clone, image
-    for current_measure in front_measurements:
-        currentWindow = "Trace across " + current_measure + " width: 'c' to continue"
+    for current_measure in front_measurements.keys():
+        currentWindow = "Trace across " + front_measurements.get(current_measure) + ": 'c' to continue"
         clone = image.copy()
         cv2.namedWindow(currentWindow)
         cv2.setMouseCallback(currentWindow, click_and_measure)
@@ -102,10 +111,10 @@ def measure_image(f, front_measurements):
 
         line_length = math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
 
-        if current_measure != front_measurements[0]:
+        if (current_measure != "height" and current_measure != "shoulderDepth"):
             f.write(",\n")
 
-        f.write("\"" + current_measure + "\"" + ": " + str(line_length))
+        f.write("  \"" + current_measure + "\"" + ": " + str(line_length))
 
         # close all open windows
         cv2.destroyAllWindows()
