@@ -34,6 +34,7 @@ def click_and_measure(event, x, y, flags, param):
         cv2.imshow(currentWindow, image)
 
 
+<<<<<<< HEAD
 def make_measurements(frontpath, sidepath, name):
     global image, currentWindow, clone
     # load the image, clone it, and setup the mouse callback function
@@ -88,6 +89,39 @@ def measure_image(f, front_measurements):
             # display the image and wait for a keypress
             cv2.imshow(currentWindow, image)
             key = cv2.waitKey(1) & 0xFF
+=======
+# load the image, clone it, and setup the mouse callback function
+image = cv2.imread("../raw_reference_images/ross_front1.JPG")
+
+scale_percent = 20  # percent of original size
+width = int(image.shape[1] * scale_percent / 100)
+height = int(image.shape[0] * scale_percent / 100)
+dim = (width, height)
+# resize image
+image = cv2.resize(image, dim, interpolation=cv2.INTER_AREA)
+
+measurements = ["height",
+                "waist",
+                "shoulders",
+                "bicep",
+                "neck",
+                "chest",
+                "calf",
+                "forearm",
+                "thigh"]
+
+f = open("../JSON/ross.json", "w")
+f.write("{")
+for current_measure in measurements:
+    currentWindow = "Trace across " + current_measure + " width: 'c' to continue"
+    clone = image.copy()
+    cv2.namedWindow(currentWindow)
+    cv2.setMouseCallback(currentWindow, click_and_measure)
+    while True:
+        # display the image and wait for a keypress
+        cv2.imshow(currentWindow, image)
+        key = cv2.waitKey(1) & 0xFF
+>>>>>>> a5aff8b6270fc77f0f128169aec0a0d3de546483
 
             # if the 'c' key is pressed, break from the loop
             if key == ord("c"):
@@ -111,3 +145,10 @@ def measure_image(f, front_measurements):
         cv2.destroyAllWindows()
 
 
+<<<<<<< HEAD
+=======
+    # close all open windows
+    cv2.destroyAllWindows()
+f.write("}")
+f.close()
+>>>>>>> a5aff8b6270fc77f0f128169aec0a0d3de546483

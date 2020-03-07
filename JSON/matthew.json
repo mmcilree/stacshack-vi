@@ -1,0 +1,19 @@
+{
+  "name": "Matthew",
+  "height": 607.1853094402071,
+  "waist": 99.00505037623081,
+  "shoulders": 147.03060905811415,
+  "bicep": 22.135943621178654,
+  "neck": 44.01136216933077,
+  "chest": 109.00458705944443,
+  "calf": 29.068883707497267,
+  "forearm": 27.294688127912362,
+  "thigh": 63.56886030125127,
+  "abdomin": 100,
+
+  "ShoulderDepth": 35,
+  "CoreDepth": 44,
+  "HipDepth": 44,
+  "GluteDepth": 44,
+  "ThighDepth": 33
+}

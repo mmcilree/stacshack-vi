@@ -1,11 +1,19 @@
 {
-  "Name": "Carson",
-  "Height": ,
-  "Waist": ,
-  "Shoulders": ,
-  "Arms": ,
-  "Neck": ,
-  "Calves": ,
-  "Forearms": ,
-  "Thighs": ,
+  "name": "Carson",
+  "height": 627.2304201806542,
+  "waist": 100.04498987955368,
+  "shoulders": 152.0131573252789,
+  "bicep": 52.773099207835045,
+  "neck": 40.0,
+  "chest": 117.51595636338071,
+  "calf": 39.05124837953327,
+  "forearm": 36.796738985948195,
+  "thigh": 51.0098029794274,
+  "abdomin": 150,
+
+  "ShoulderDepth": 35,
+  "CoreDepth": 44,
+  "HipDepth": 44,
+  "GluteDepth": 44,
+  "ThighDepth": 33
 }
