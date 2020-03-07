@@ -13,7 +13,7 @@ MASK_COLOR = (0.0,0.0,1.0) # In BGR format
 #== Processing =======================================================================
 
 #-- Read image -----------------------------------------------------------------------
-img = cv2.imread('./raw_reference_images/');
+img = cv2.imread('./raw_reference_images/ben_front1');
 gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
 
 #-- Edge detection -------------------------------------------------------------------
