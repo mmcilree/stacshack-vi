@@ -10,8 +10,8 @@ def generate_file(m):
     #May need to append
     for x in range (0, len(m.abilities)):
         s = s + ("""<property-block>
-                  <h4>{1}</h4>
-                  <p>{2}</p>
+                  <h4>{0}</h4>
+                  <p>{1}</p>
                 </property-block>""".format(m.abilities[x].name, m.abilities[x].desc))
 
     s = s + ("  <h3>Actions</h3>")
@@ -19,8 +19,8 @@ def generate_file(m):
     #May need to append
     for x in range (0, len(m.actions)):
         s = s + ("""<property-block>
-                  <h4>{1}</h4>
-                  <p>{2}</p>
+                  <h4>{0}</h4>
+                  <p>{1}</p>
                 </property-block>""".format(m.actions[x].name, m.actions[x].desc))
 
     f.write(s)
