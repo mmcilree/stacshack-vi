@@ -12,7 +12,7 @@ def survey():
 	root = tkinter.Tk()
 	center(root)
 	root.withdraw()
-	name =  simpledialog.askstring("Welcome to DnD Me:", "Please enter your name:")
+	name = simpledialog.askstring("Welcome to DnD Me:", "Please enter your name:")
 	return name
 
 def center(win):
@@ -30,4 +30,7 @@ def select_side_image():
 	return filedialog.askopenfilename(initialdir = "../raw_reference_images", title = "Select side view:")
 
 def complete():
-	messagebox.askyesno("Sucess:", "You have been reborn as a DnD monster. View your monster card?")
+	root = tkinter.Tk()
+	center(root)
+	root.withdraw()
+	return messagebox.askyesno("Sucess:", "You have been reborn as a DnD monster. View your monster card?")
