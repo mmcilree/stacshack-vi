@@ -3,7 +3,7 @@ from tkinter import *
 from PIL import Image
 from PIL import ImageTk
 import tkinter
-from tkinter import filedialog, simpledialog
+from tkinter import filedialog, simpledialog, messagebox
 
 
 import cv2
@@ -28,3 +28,6 @@ def select_front_image():
 
 def select_side_image():
 	return filedialog.askopenfilename(initialdir = "../raw_reference_images", title = "Select side view:")
+
+def loading():
+	messagebox.askyesno("Sucess:", "You have been reborn as a DnD monster. View your monster card?")
