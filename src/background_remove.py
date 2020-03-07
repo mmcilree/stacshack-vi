@@ -1,60 +1,94 @@
-import cv2
+# import the necessary packages
+from scipy.spatial import distance as dist
+from imutils import perspective
+from imutils import contours
 import numpy as np
+import argparse
+import imutils
+import cv2
+def midpoint(ptA, ptB):
+	return ((ptA[0] + ptB[0]) * 0.5, (ptA[1] + ptB[1]) * 0.5)
 
-#== Parameters =======================================================================
-BLUR = 21
-CANNY_THRESH_1 = 10
-CANNY_THRESH_2 = 200
-MASK_DILATE_ITER = 10
-MASK_ERODE_ITER = 10
-MASK_COLOR = (0.0,0.0,1.0) # In BGR format
+width = 10
 
+# load the image, convert it to grayscale, and blur it slightly
+image = cv2.imread("raw_reference_images/ben_front1.JPG")
+gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+gray = cv2.GaussianBlur(gray, (7, 7), 0)
+# perform edge detection, then perform a dilation + erosion to
+# close gaps in between object edges
+edged = cv2.Canny(gray, 50, 100)
+edged = cv2.dilate(edged, None, iterations=1)
+edged = cv2.erode(edged, None, iterations=1)
+# find contours in the edge map
+cnts = cv2.findContours(edged.copy(), cv2.RETR_EXTERNAL,
+	cv2.CHAIN_APPROX_SIMPLE)
+cnts = imutils.grab_contours(cnts)
+# sort the contours from left-to-right and initialize the
+# 'pixels per metric' calibration variable
+(cnts, _) = contours.sort_contours(cnts)
+pixelsPerMetric = None
+# loop over the contours individually
+print(len(cnts))
+toosmall = 0
+for c in cnts:
+	# if the contour is not sufficiently large, ignore it
+	if cv2.contourArea(c) < 100:
+		print("Too small + 1: " + toosmall+)
 
-#== Processing =======================================================================
-
-#-- Read image -----------------------------------------------------------------------
-img = cv2.imread('./raw_reference_images/ben_front1');
-gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
-
-#-- Edge detection -------------------------------------------------------------------
-edges = cv2.Canny(gray, CANNY_THRESH_1, CANNY_THRESH_2)
-edges = cv2.dilate(edges, None)
-edges = cv2.erode(edges, None)
-
-#-- Find contours in edges, sort by area ---------------------------------------------
-contour_info = []
-_, contours, _ = cv2.findContours(edges, cv2.RETR_LIST, cv2.CHAIN_APPROX_NONE)
-# Previously, for a previous version of cv2, this line was:
-#  contours, _ = cv2.findContours(edges, cv2.RETR_LIST, cv2.CHAIN_APPROX_NONE)
-# Thanks to notes from commenters, I've updated the code but left this note
-for c in contours:
-    contour_info.append((
-        c,
-        cv2.isContourConvex(c),
-        cv2.contourArea(c),
-    ))
-contour_info = sorted(contour_info, key=lambda c: c[2], reverse=True)
-max_contour = contour_info[0]
-
-#-- Create empty mask, draw filled polygon on it corresponding to largest contour ----
-# Mask is black, polygon is white
-mask = np.zeros(edges.shape)
-cv2.fillConvexPoly(mask, max_contour[0], (255))
-
-#-- Smooth mask, then blur it --------------------------------------------------------
-mask = cv2.dilate(mask, None, iterations=MASK_DILATE_ITER)
-mask = cv2.erode(mask, None, iterations=MASK_ERODE_ITER)
-mask = cv2.GaussianBlur(mask, (BLUR, BLUR), 0)
-mask_stack = np.dstack([mask]*3)    # Create 3-channel alpha mask
-
-#-- Blend masked img into MASK_COLOR background --------------------------------------
-mask_stack  = mask_stack.astype('float32') / 255.0          # Use float matrices,
-img         = img.astype('float32') / 255.0                 #  for easy blending
-
-masked = (mask_stack * img) + ((1-mask_stack) * MASK_COLOR) # Blend
-masked = (masked * 255).astype('uint8')                     # Convert back to 8-bit
-
-cv2.imshow('img', masked)                                   # Display
-cv2.waitKey()
-
-#cv2.imwrite('C:/Temp/person-masked.jpg', masked)           # Save
+		continue
+	# compute the rotated bounding box of the contour
+	orig = image.copy()
+	box = cv2.minAreaRect(c)
+	box = cv2.cv.BoxPoints(box) if imutils.is_cv2() else cv2.boxPoints(box)
+	box = np.array(box, dtype="int")
+	# order the points in the contour such that they appear
+	# in top-left, top-right, bottom-right, and bottom-left
+	# order, then draw the outline of the rotated bounding
+	# box
+	box = perspective.order_points(box)
+	cv2.drawContours(orig, [box.astype("int")], -1, (0, 255, 0), 2)
+	# loop over the original points and draw them
+	for (x, y) in box:
+		cv2.circle(orig, (int(x), int(y)), 5, (0, 0, 255), -1)
+	# unpack the ordered bounding box, then compute the midpoint
+	# between the top-left and top-right coordinates, followed by
+	# the midpoint between bottom-left and bottom-right coordinates
+	(tl, tr, br, bl) = box
+	(tltrX, tltrY) = midpoint(tl, tr)
+	(blbrX, blbrY) = midpoint(bl, br)
+	# compute the midpoint between the top-left and top-right points,
+	# followed by the midpoint between the top-righ and bottom-right
+	(tlblX, tlblY) = midpoint(tl, bl)
+	(trbrX, trbrY) = midpoint(tr, br)
+	# draw the midpoints on the image
+	cv2.circle(orig, (int(tltrX), int(tltrY)), 5, (255, 0, 0), -1)
+	cv2.circle(orig, (int(blbrX), int(blbrY)), 5, (255, 0, 0), -1)
+	cv2.circle(orig, (int(tlblX), int(tlblY)), 5, (255, 0, 0), -1)
+	cv2.circle(orig, (int(trbrX), int(trbrY)), 5, (255, 0, 0), -1)
+	# draw lines between the midpoints
+	cv2.line(orig, (int(tltrX), int(tltrY)), (int(blbrX), int(blbrY)),
+		(255, 0, 255), 2)
+	cv2.line(orig, (int(tlblX), int(tlblY)), (int(trbrX), int(trbrY)),
+		(255, 0, 255), 2)
+	# compute the Euclidean distance between the midpoints
+	dA = dist.euclidean((tltrX, tltrY), (blbrX, blbrY))
+	dB = dist.euclidean((tlblX, tlblY), (trbrX, trbrY))
+	# if the pixels per metric has not been initialized, then
+	# compute it as the ratio of pixels to supplied metric
+	# (in this case, inches)
+	if pixelsPerMetric is None:
+		pixelsPerMetric = dB / width
+	# compute the size of the object
+	dimA = dA / pixelsPerMetric
+	dimB = dB / pixelsPerMetric
+	# draw the object sizes on the image
+	cv2.putText(orig, "{:.1f}in".format(dimA),
+		(int(tltrX - 15), int(tltrY - 10)), cv2.FONT_HERSHEY_SIMPLEX,
+		0.65, (255, 255, 255), 2)
+	cv2.putText(orig, "{:.1f}in".format(dimB),
+		(int(trbrX + 10), int(trbrY)), cv2.FONT_HERSHEY_SIMPLEX,
+		0.65, (255, 255, 255), 2)
+	# show the output image
+	cv2.imshow("Image", orig)
+	cv2.waitKey(0)
