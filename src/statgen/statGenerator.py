@@ -20,24 +20,37 @@ def genStats():
     print(str(person))
 
     STR = genStrength(person)
+    DEX = genDexterity(person)
     CON = genConstitution(person)
-    print(STR, CON)
+    INT = genInteligence(person)
+    WIS = genWisdom(person)
+    CHR = genCharisma(person)
+
+    print(STR, DEX, CON, INT, WIS, CHR)
 
 def genStrength(person):
-    strength = max(4, math.log(person.strDelta ** 2 * 30 + 10) * 5 - 5)
+    strength = min(20, max(4, (person.strDelta - .1) ** .32 * 60 - 47))
     return round(strength)
 
 def genDexterity(person):
-    dexterity = 20 - (math.log(person.dexDelta + 1) * 3) ** 4
+    dexterity = min(20, max(4, (person.dexDelta / 3 - .1) ** .32 * 60 - 47))
     return round(dexterity)
 
 def genConstitution(person):
     constitution = 20 - (math.log(person.conDelta + 1) * 3) ** 4
     return round(constitution)
 
+def genInteligence(person):
+    inteligence = 20 - (math.log(person.conDelta + 1) * 3) ** 4
+    return round(inteligence)
+
+def genWisdom(person):
+    wisdom = 20 - (math.log(person.conDelta + 1) * 3) ** 4
+    return round(wisdom)
+
 def genCharisma(person):
-    strength = min(20, 30 - math.log(person.chrDelta * 10 - 5) * 8)
-    return round(strength)
+    charisma = min(20, 30 - math.log(person.chrDelta * 10 - 5) * 8)
+    return round(charisma)
 
 if __name__== "__main__":
     main()
