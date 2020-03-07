@@ -6,8 +6,8 @@ from .person import Person
 def main():
     genStats()
 
-def genStats():
-    filename = "../JSON/" + input("Enter JSON file: ") + ".json"
+def genStats(jsonName):
+    filename = "../JSON/" + jsonName + ".json"
 
     with open(filename, 'r') as file:
         data = file.read().replace('\n', '')
