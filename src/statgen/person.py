@@ -17,7 +17,7 @@ class Person:
         self.measure.append(obj["GluteDepth"]) # 11
         self.measure.append(obj["ThighDepth"]) # 12
 
-        self.measure.append(obj["abdomin"]) # 13
+        self.measure.append(obj["abdomen"]) # 13
 
         # self.measure.append(obj["HeadOffset"]) # 13
         # self.measure.append(obj["ShoulderOffset"]) # 13
@@ -27,6 +27,7 @@ class Person:
 
         self.generateRatios()
         self.generateRelativeMuscleArea()
+        self.generateFastTwitchMuscle()
         self.generateGreekGodRatios()
         self.generateCylinderDelta()
 
@@ -67,19 +68,30 @@ class Person:
         self.ratios.append(self.measure[3] / self.measure[0]) # 13
         # N to H
         self.ratios.append(self.measure[4] / self.measure[0]) # 14
-        # C to A
+        # C to H
         self.ratios.append(self.measure[5] / self.measure[0]) # 15
-        # F to A
+        # F to H
         self.ratios.append(self.measure[6] / self.measure[0]) # 16
-        # T to W
+        # T to H
         self.ratios.append(self.measure[7] / self.measure[0]) # 17
-        # T to W
+        # A to H
         self.ratios.append(self.measure[13] / self.measure[0]) # 18
 
     def generateRelativeMuscleArea(self):
         self.strDelta = 0
         for i in range(12, 18):
             self.strDelta += self.ratios[i]
+
+
+    def generateFastTwitchMuscle(self):
+        self.dexDelta = 0
+        self.dexDelta += self.ratios[12] * 1
+        self.dexDelta += self.ratios[13] * 3
+        self.dexDelta += self.ratios[15] * 5
+        self.dexDelta += self.ratios[16] * 3
+        self.dexDelta += self.ratios[18] * 2
+        self.dexDelta += self.ratios[0]  * 2
+        self.dexDelta -= self.ratios[17] * 3
 
     def generateGreekGodRatios(self):
         self.ggDelta = []
@@ -133,7 +145,8 @@ class Person:
         toReturn += "\t" + "Waist Depth:    " + str(self.ratios[9]) + "\n"
         toReturn += "\t" + "Glute Depth:    " + str(self.ratios[10]) + "\n"
         toReturn += "\t" + "Thigh Depth:    " + str(self.ratios[11]) + "\n\n"
-        toReturn += "\tStrength:        " + str(self.strDelta) + "\n"
+        toReturn += "\tStrength Delta:  " + str(self.strDelta) + "\n"
+        toReturn += "\tDexterity Delta: " + str(self.dexDelta) + "\n"
         toReturn += "\tHench Delta:     " + str(self.conDelta) + "\n"
         toReturn += "\tGreek God Delta: " + str(self.chrDelta) + "\n"
         return toReturn

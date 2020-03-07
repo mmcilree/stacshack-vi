@@ -1,0 +1,20 @@
+{
+  "name": "Raiyan",
+
+  "height": 591.1903246840226,
+  "waist": 122.00409829181969,
+  "shoulders": 153.0130713370593,
+  "neck": 45.0111097397076,
+  "chest": 102.0,
+  "thigh": 48.0,
+  "bicep": 36.0,
+  "forearm": 31.016124838541646,
+  "calf": 36.013886210738214,
+  "abdomen": 153,
+
+  "ShoulderDepth": 35,
+  "CoreDepth": 44,
+  "HipDepth": 44,
+  "GluteDepth": 44,
+  "ThighDepth": 33
+}
