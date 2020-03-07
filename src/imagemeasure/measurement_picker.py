@@ -67,7 +67,7 @@ def make_measurements(frontpath, sidepath, name):
                           "calf": "Trace across calf width",
                           "thighDepth": "Trace across thigh width",
                           "gluteDepth": "Trace across glute width",
-                          "chest": "Trace across chest width"
+                          "chestDepth": "Trace across chest width"
                            }
 
     posture_measurements = {
