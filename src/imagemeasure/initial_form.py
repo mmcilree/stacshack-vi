@@ -29,5 +29,5 @@ def select_front_image():
 def select_side_image():
 	return filedialog.askopenfilename(initialdir = "../raw_reference_images", title = "Select side view:")
 
-def loading():
+def complete():
 	messagebox.askyesno("Sucess:", "You have been reborn as a DnD monster. View your monster card?")
