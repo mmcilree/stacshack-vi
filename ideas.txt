@@ -1,8 +1,8 @@
 RPG hexagonal based combat sim
-Sponsor challenges
 Music generator using sentiment analysis
 Dungeon generator / simulator
 Mashing monsters together innit
 Game where you're an online pirate and nick software
 AI d&d player
 Get several photos of a person. Use AI to generate D&D stats
+RON
