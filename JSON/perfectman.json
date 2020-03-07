@@ -9,9 +9,9 @@
   "Forearms": 5.9,
   "Thighs": 33,
 
-  "ShoulderDepth": 17,
-  "CoreDepth": 14,
-  "HipDepth": 10,
-  "GluteDepth": 17,
-  "ThighDepth": 10
+  "ShoulderDepth": 35,
+  "CoreDepth": 44,
+  "HipDepth": 44,
+  "GluteDepth": 44,
+  "ThighDepth": 33
 }
