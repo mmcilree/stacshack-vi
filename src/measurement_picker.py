@@ -44,10 +44,10 @@ dim = (width, height)
 # resize image
 image = cv2.resize(image, dim, interpolation=cv2.INTER_AREA)
 
-measurements = ["full height",
+measurements = ["height",
                 "waist",
                 "shoulders",
-                "upper arm",
+                "bicep",
                 "neck",
                 "chest",
                 "calf",
