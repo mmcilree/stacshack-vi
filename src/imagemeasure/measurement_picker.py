@@ -33,6 +33,21 @@ def click_and_measure(event, x, y, flags, param):
         cv2.line(image, refPt[0], refPt[1], (0, 255, 0), 2)
         cv2.imshow(currentWindow, image)
 
+def click_and_record(event, x, y, flags, param):
+    global refPt, measuring, currentWindow, image, clones
+
+    if event == cv2.EVENT_LBUTTONDOWN:
+        image = clone.copy()
+        refPt = [(x, y)]
+        measuring = True
+
+    elif event == cv2.EVENT_LBUTTONUP:
+        # record the ending (x, y) coordinates and indicate that
+        # the cropping operation is finished
+        measuring = False
+        # draw a line from start to end point
+        cv2.circle(image, refPt[0], 10, (255, 0, 0), 2)
+        cv2.imshow(currentWindow, image)
 
 def make_measurements(frontpath, sidepath, name):
     global image, currentWindow, clone
@@ -52,11 +67,11 @@ def make_measurements(frontpath, sidepath, name):
                           "calf": "Trace across calf width",
                           "thighDepth": "Trace across thigh width",
                           "gluteDepth": "Trace across glute width",
-                          "chest": "Trace across chest width",
-                          "neckNape": "",
+                          "chest": "Trace across chest width"
                            }
 
     posture_measurements = {
+        "neckNape": "Select neck nape point",
         "shoulderBlades": "Select shoulder blade point",
         "backSmall": "Select inward curve of back point",
         "tailbone": "Select base of back point"
@@ -128,11 +143,11 @@ def measure_image(f, front_measurements):
 
 def select_points(f, posture_measurements):
     global currentWindow, clone, image
-    for current_measure in front_measurements.keys():
-        currentWindow = front_measurements.get(current_measure) + ": 'c' to continue"
+    for current_measure in posture_measurements.keys():
+        currentWindow = posture_measurements.get(current_measure) + ": 'c' to continue"
         clone = image.copy()
         cv2.namedWindow(currentWindow)
-        cv2.setMouseCallback(currentWindow, click_and_measure)
+        cv2.setMouseCallback(currentWindow, click_and_record)
         while True:
             # display the image and wait for a keypress
             cv2.imshow(currentWindow, image)
@@ -145,14 +160,11 @@ def select_points(f, posture_measurements):
 
         # write data
         x1 = refPt[0][0]
-        x2 = refPt[1][0]
-
-        line_length = math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
 
         if (current_measure != "height" and current_measure != "shoulderDepth"):
             f.write(",\n")
 
-        f.write("  \"" + current_measure + "\"" + ": " + str(line_length))
+        f.write("  \"" + current_measure + "\"" + ": " + str(x1))
 
         # close all open windows
         cv2.destroyAllWindows()
