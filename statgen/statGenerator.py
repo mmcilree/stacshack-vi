@@ -28,7 +28,7 @@ def genStrength(person):
     return round(strength)
 
 def genConstitution(person):
-    strength = 20 - (math.log(person.strDelta + 1) * 3) ** 4
+    strength = 20 - (math.log(person.conDelta + 1) * 3) ** 4
     return round(strength)
 
 if __name__== "__main__":

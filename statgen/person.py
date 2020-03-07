@@ -42,15 +42,15 @@ class Person:
 
         # Constitution Ratios
         # Shoulders
-        self.ratios.append(self.measure[2] / self.measure[8])
+        self.ratios.append(self.measure[2] / (self.measure[8] * 2))
         # Core
-        self.ratios.append(self.measure[4] / self.measure[9])
+        self.ratios.append(self.measure[4] / (self.measure[9] / 2))
         # Waist
-        self.ratios.append(self.measure[1] / self.measure[10])
+        self.ratios.append(self.measure[1] / (self.measure[10]))
         # Glutes
-        self.ratios.append(self.measure[7] / self.measure[11])
+        self.ratios.append(self.measure[7] / (self.measure[11]))
         # Thighs
-        self.ratios.append(self.measure[7] / self.measure[12])
+        self.ratios.append(self.measure[7] / (self.measure[12]))
 
     def generateGreekGodRatios(self):
         self.ggDelta = []
@@ -92,6 +92,11 @@ class Person:
         toReturn += "\t" + "C / A:     " + str(self.ratios[4]) + "\n"
         toReturn += "\t" + "F / A:     " + str(self.ratios[5]) + "\n"
         toReturn += "\t" + "T / W:     " + str(self.ratios[6]) + "\n\n"
+        toReturn += "\t" + "Shoulder Depth: " + str(self.ratios[7]) + "\n"
+        toReturn += "\t" + "Core Depth:     " + str(self.ratios[8]) + "\n"
+        toReturn += "\t" + "Waist Depth:    " + str(self.ratios[9]) + "\n"
+        toReturn += "\t" + "Glute Depth:    " + str(self.ratios[10]) + "\n"
+        toReturn += "\t" + "Thigh Depth:    " + str(self.ratios[11]) + "\n\n"
         toReturn += "\t Greek God Delta: " + str(self.strDelta) + "\n"
-        toReturn += "\t Hench Delta: " + str(self.strDelta) + "\n"
+        toReturn += "\t Hench Delta:     " + str(self.conDelta) + "\n"
         return toReturn
