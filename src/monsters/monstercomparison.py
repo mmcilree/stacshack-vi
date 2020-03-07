@@ -161,6 +161,7 @@ def makeMonster(name, str, dex, con, intelligence, wis, cha):
 
     result = Monster(name, cr, type, alignment, hp, speed, str, dex, con, intelligence, wis, cha, senses, ac, allAbilities, allActions)
     result.fixActions()
+    result.fixCr()
     return result
 
 

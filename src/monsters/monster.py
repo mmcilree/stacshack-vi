@@ -63,3 +63,8 @@ class Monster:
             self.actions[0].desc = re.sub(checker, self.name, self.actions[0].desc)
             self.abilities[0].desc = re.sub(checker, self.name, self.abilities[0].desc)
             self.abilities[1].desc = re.sub(checker, self.name, self.abilities[1].desc)
+
+    def fixCr(self):
+        self.cr = re.sub("0.125", "1/8", str(self.cr))
+        self.cr = re.sub("0.25", "1/4", str(self.cr))
+        self.cr = re.sub("0.5", "1/2", str(self.cr))
