@@ -27,6 +27,7 @@ def genStats():
     CHR = genCharisma(person)
 
     print(STR, DEX, CON, INT, WIS, CHR)
+    return [STR, DEX, CON, INT, WIS, CHR]
 
 def genStrength(person):
     strength = min(20, max(4, (person.strDelta - .1) ** .32 * 60 - 47))

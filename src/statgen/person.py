@@ -11,13 +11,13 @@ class Person:
         self.measure.append(obj["forearm"] * 3.14) # 6
         self.measure.append(obj["thigh"]) # 7
 
-        self.measure.append(obj["ShoulderDepth"]) # 8
-        self.measure.append(obj["CoreDepth"]) # 9
-        self.measure.append(obj["HipDepth"]) # 10
-        self.measure.append(obj["GluteDepth"]) # 11
-        self.measure.append(obj["ThighDepth"]) # 12
+        self.measure.append(obj["chestDepth"]) # 8
+        self.measure.append(obj["coreDepth"]) # 9
+        self.measure.append(0) # 10
+        self.measure.append(obj["gluteDepth"]) # 11
+        self.measure.append(obj["thighDepth"]) # 12
 
-        self.measure.append(obj["abdomen"]) # 13
+        self.measure.append(obj["torso"]) # 13
 
         # self.measure.append(obj["HeadOffset"]) # 13
         # self.measure.append(obj["ShoulderOffset"]) # 13
@@ -55,7 +55,8 @@ class Person:
         # Core
         self.ratios.append(self.measure[4] / (self.measure[9] / 2)) # 8
         # Waist
-        self.ratios.append(self.measure[1] / (self.measure[10])) # 9
+        # self.ratios.append(self.measure[1] / (self.measure[10])) # 9
+        self.ratios.append(0)
         # Glutes
         self.ratios.append(self.measure[7] / (self.measure[11])) # 10
         # Thighs
@@ -142,7 +143,7 @@ class Person:
         toReturn += "\t" + "T / W -GG: " + str(self.ggDelta[6]) + "\n\n"
         toReturn += "\t" + "Shoulder Depth: " + str(self.ratios[7]) + "\n"
         toReturn += "\t" + "Core Depth:     " + str(self.ratios[8]) + "\n"
-        toReturn += "\t" + "Waist Depth:    " + str(self.ratios[9]) + "\n"
+        # toReturn += "\t" + "Waist Depth:    " + str(self.ratios[9]) + "\n"
         toReturn += "\t" + "Glute Depth:    " + str(self.ratios[10]) + "\n"
         toReturn += "\t" + "Thigh Depth:    " + str(self.ratios[11]) + "\n\n"
         toReturn += "\tStrength Delta:  " + str(self.strDelta) + "\n"
