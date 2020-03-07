@@ -12,26 +12,32 @@ def loadFile():
     jsonContents = json.loads(contents)
 
     monsters = []
-    closest = []  # R
     for x in jsonContents:
 
         # print(x)
         if not "name" in x:
             continue
 
-        abilities = x["special_abilities"]
-        actions = x["actions"]
+        print(x["name"])
+
+        if "special_abilities" in x:
+            abilities = x["special_abilities"]
+        else:
+            abilities = []
+
+        if "actions" in x:
+            actions = x["actions"]
+        else:
+            actions = []
 
         parsedAbilities = []
         parsedActions = []
 
-        for x in abilities:
-            print(x)
-            parsedAbilities.append(Ability(x["name"], x["desc"]))
+        for y in abilities:
+            parsedAbilities.append(Ability(y["name"], y["desc"]))
 
-        for x in actions:
-            print(x)
-            parsedActions.append(Ability(x["name"], x["desc"]))
+        for y in actions:
+            parsedActions.append(Ability(y["name"], y["desc"]))
 
         # TODO change
         temp = Monster(x["name"], x["challenge_rating"], x["type"], x["alignment"], x["hit_points"], x["speed"],
@@ -64,9 +70,10 @@ def getMonsters(str, dex, con, int, wis, cha):
 
 
 def main():
-    #x = getMonsters(20, 8, 14, 8, 16, 10)
+    x = getMonsters(20, 8, 14, 8, 16, 10)
 
-    m = Monster("Ben", 20, "Undead", "True Neutral", "200", "100ft walking", 40, 40, 40, 40, 40, 40, "Truesight 1000ft", 100, [Ability("All", "All")], [Ability("All", "All")])
+    m = Monster("Ben", 20, "Undead", "True Neutral", "200", "100ft walking", 40, 40, 40, 40, 40, 40, "Truesight 1000ft",
+                100, [Ability("All", "All")], [Ability("All", "All")])
     generate_file(m)
 
 

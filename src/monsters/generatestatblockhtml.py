@@ -1,5 +1,8 @@
 from monsters.monster import *
+
 HTML_PATH = "../monster_resources/Valloric-statblock5e-0.0.4-7-g28453d9/Valloric-statblock5e-28453d9/demo-inlined.html"
+
+
 def generate_file(m):
     f = open(HTML_PATH, "w")
 
@@ -7,8 +10,8 @@ def generate_file(m):
         name=m.name, alignment=m.alignment, ac=m.ac, hp=m.hp, speed=m.speed, cha=m.cha, con=m.con, dex=m.dex, int=m.int,
         str=m.str, wis=m.wis, senses=m.senses, cr=m.cr)
 
-    #May need to append
-    for x in range (0, len(m.abilities)):
+    # May need to append
+    for x in range(0, len(m.abilities)):
         s = s + ("""<property-block>
                   <h4>{0}</h4>
                   <p>{1}</p>
@@ -16,8 +19,8 @@ def generate_file(m):
 
     s = s + ("  <h3>Actions</h3>")
 
-    #May need to append
-    for x in range (0, len(m.actions)):
+    # May need to append
+    for x in range(0, len(m.actions)):
         s = s + ("""<property-block>
                   <h4>{0}</h4>
                   <p>{1}</p>
@@ -25,5 +28,3 @@ def generate_file(m):
 
     f.write(s)
     f.close()
-
-
