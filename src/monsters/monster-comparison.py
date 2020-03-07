@@ -163,10 +163,6 @@ def makeMonster(name, str, dex, con, intelligence, wis, cha):
     result.fixActions()
     return result
 
-def main():
-    me = makeMonster("Ben", 11, 14, 15, 13,19,18)
+def makeMonster(name, str, dex, con, int, wis, cha):
+    me = makeMonster()
     generate_file(me)
-
-
-if __name__ == "__main__":
-    main()
