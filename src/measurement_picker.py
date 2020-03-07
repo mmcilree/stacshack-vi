@@ -35,7 +35,7 @@ def click_and_measure(event, x, y, flags, param):
 
 
 # load the image, clone it, and setup the mouse callback function
-image = cv2.imread("../raw_reference_images/ben_front1.JPG")
+image = cv2.imread("../raw_reference_images/ross_front1.JPG")
 
 scale_percent = 20  # percent of original size
 width = int(image.shape[1] * scale_percent / 100)
@@ -54,7 +54,7 @@ measurements = ["height",
                 "forearm",
                 "thigh"]
 
-f = open("../JSON/ben.json", "w")
+f = open("../JSON/ross.json", "w")
 f.write("{")
 for current_measure in measurements:
     currentWindow = "Trace across " + current_measure + " width: 'c' to continue"

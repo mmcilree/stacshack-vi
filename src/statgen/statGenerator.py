@@ -7,7 +7,7 @@ def main():
     genStats()
 
 def genStats():
-    filename = "JSON/" + input("Enter JSON file: ") + ".json"
+    filename = "../JSON/" + input("Enter JSON file: ") + ".json"
 
     with open(filename, 'r') as file:
         data = file.read().replace('\n', '')
@@ -24,11 +24,19 @@ def genStats():
     print(STR, CON)
 
 def genStrength(person):
-    strength = 20 - (math.log(person.strDelta + 1) * 3) ** 4
+    strength = max(4, math.log(person.strDelta ** 2 * 30 + 10) * 5 - 5)
     return round(strength)
 
+def genDexterity(person):
+    dexterity = 20 - (math.log(person.dexDelta + 1) * 3) ** 4
+    return round(dexterity)
+
 def genConstitution(person):
-    strength = 20 - (math.log(person.conDelta + 1) * 3) ** 4
+    constitution = 20 - (math.log(person.conDelta + 1) * 3) ** 4
+    return round(constitution)
+
+def genCharisma(person):
+    strength = min(20, 30 - math.log(person.chrDelta * 10 - 5) * 8)
     return round(strength)
 
 if __name__== "__main__":
