@@ -1,7 +1,7 @@
 import json
-from monsters.monster import *
-from monsters.monsterability import *
-from monsters.generatestatblockhtml import *
+from .monster import *
+from .monsterability import *
+from .generatestatblockhtml import *
 
 from random import seed
 from random import random
@@ -163,6 +163,8 @@ def makeMonster(name, str, dex, con, intelligence, wis, cha):
     result.fixActions()
     return result
 
-def makeMonster(name, str, dex, con, int, wis, cha):
-    me = makeMonster()
+
+#Call this!
+def make(name, str, dex, con, int, wis, cha):
+    me = makeMonster(name, str, dex, con, int, wis, cha)
     generate_file(me)

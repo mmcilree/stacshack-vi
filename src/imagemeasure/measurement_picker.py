@@ -38,23 +38,29 @@ def make_measurements(frontpath, sidepath, name):
     global image, currentWindow, clone
     # load the image, clone it, and setup the mouse callback function
 
-    front_measurements = {"height" : "full height",
-                    "waist": "waist width",
-                    "shoulders": "shoulder with",
-                    "neck": "neck width",
-                    "chest": "chest width",
-                    "thigh": "thigh width",
-                    "torso":"torso width"}
+    front_measurements = {"height" : "Trace across full height",
+                    "waist": "Trace across waist width",
+                    "shoulders": "Trace across shoulder with",
+                    "neck": "Trace across neck width",
+                    "chest": "Trace across chest width",
+                    "thigh": "Trace across thigh width",
+                    "torso":"Trace across torso width"}
 
-    side_measurements = { "shoulderDepth": "shoulder width",
-                          "coreDepth": "core width",
-                          "bicep": "bicep width",
-                          "forearm": "forearm width",
-                          "calf": "calf width",
-                          "thighDepth": "thigh width",
-                          "gluteDepth": "glute width",
-                          "chest": "chest width",
+    side_measurements = { "coreDepth": "Trace across core width",
+                          "bicep": "Trace across bicep width",
+                          "forearm": "Trace across forearm width",
+                          "calf": "Trace across calf width",
+                          "thighDepth": "Trace across thigh width",
+                          "gluteDepth": "Trace across glute width",
+                          "chest": "Trace across chest width",
+                          "neckNape": "",
                            }
+
+    posture_measurements = {
+        "shoulderBlades": "Select shoulder blade point",
+        "backSmall": "Select inward curve of back point",
+        "tailbone": "Select base of back point"
+    }
 
     f = open("../JSON/" + name + ".json", "w")
     f.write("{")
@@ -82,6 +88,7 @@ def make_measurements(frontpath, sidepath, name):
 
     measure_image(f, side_measurements)
 
+    select_points(f, posture_measurements)
     f.write("}")
     f.close()
 
@@ -89,7 +96,7 @@ def make_measurements(frontpath, sidepath, name):
 def measure_image(f, front_measurements):
     global currentWindow, clone, image
     for current_measure in front_measurements.keys():
-        currentWindow = "Trace across " + front_measurements.get(current_measure) + ": 'c' to continue"
+        currentWindow = front_measurements.get(current_measure) + ": 'c' to continue"
         clone = image.copy()
         cv2.namedWindow(currentWindow)
         cv2.setMouseCallback(currentWindow, click_and_measure)
@@ -119,3 +126,33 @@ def measure_image(f, front_measurements):
         # close all open windows
         cv2.destroyAllWindows()
 
+def select_points(f, posture_measurements):
+    global currentWindow, clone, image
+    for current_measure in front_measurements.keys():
+        currentWindow = front_measurements.get(current_measure) + ": 'c' to continue"
+        clone = image.copy()
+        cv2.namedWindow(currentWindow)
+        cv2.setMouseCallback(currentWindow, click_and_measure)
+        while True:
+            # display the image and wait for a keypress
+            cv2.imshow(currentWindow, image)
+            key = cv2.waitKey(1) & 0xFF
+
+            # if the 'c' key is pressed, break from the loop
+            if key == ord("c"):
+                image = clone.copy()
+                break
+
+        # write data
+        x1 = refPt[0][0]
+        x2 = refPt[1][0]
+
+        line_length = math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
+
+        if (current_measure != "height" and current_measure != "shoulderDepth"):
+            f.write(",\n")
+
+        f.write("  \"" + current_measure + "\"" + ": " + str(line_length))
+
+        # close all open windows
+        cv2.destroyAllWindows()
