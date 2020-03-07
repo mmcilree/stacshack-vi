@@ -133,7 +133,7 @@ def measure_image(f, front_measurements):
 
         line_length = math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
 
-        if (current_measure != "height" and current_measure != "shoulderDepth"):
+        if (current_measure != "height" and current_measure != "coreDepth"):
             f.write(",\n")
 
         f.write("  \"" + current_measure + "\"" + ": " + str(line_length))
@@ -157,12 +157,9 @@ def select_points(f, posture_measurements):
             if key == ord("c"):
                 image = clone.copy()
                 break
-
+        f.write(",\n")
         # write data
         x1 = refPt[0][0]
-
-        if (current_measure != "height" and current_measure != "shoulderDepth"):
-            f.write(",\n")
 
         f.write("  \"" + current_measure + "\"" + ": " + str(x1))
 
