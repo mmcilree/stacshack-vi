@@ -34,57 +34,80 @@ def click_and_measure(event, x, y, flags, param):
         cv2.imshow(currentWindow, image)
 
 
-# load the image, clone it, and setup the mouse callback function
-image = cv2.imread("../raw_reference_images/ben_front1.JPG")
+def make_measurements(frontpath, sidepath, name):
+    global image, currentWindow, clone
+    # load the image, clone it, and setup the mouse callback function
 
-scale_percent = 20  # percent of original size
-width = int(image.shape[1] * scale_percent / 100)
-height = int(image.shape[0] * scale_percent / 100)
-dim = (width, height)
-# resize image
-image = cv2.resize(image, dim, interpolation=cv2.INTER_AREA)
+    front_measurements = ["height",
+                    "waist",
+                    "shoulders",
+                    "neck",
+                    "chest",
+                    "thigh"]
 
-measurements = ["height",
-                "waist",
-                "shoulders",
-                "bicep",
-                "neck",
-                "chest",
-                "calf",
-                "forearm",
-                "thigh"]
+    side_measurements = ["bicep",
+                          "forearm",
+                          "calf", "abdomen"]
 
-f = open("../JSON/ben.json", "w")
-f.write("{")
-for current_measure in measurements:
-    currentWindow = "Trace across " + current_measure + " width: 'c' to continue"
-    clone = image.copy()
-    cv2.namedWindow(currentWindow)
-    cv2.setMouseCallback(currentWindow, click_and_measure)
-    while True:
-        # display the image and wait for a keypress
-        cv2.imshow(currentWindow, image)
-        key = cv2.waitKey(1) & 0xFF
+    f = open("../JSON/" + name + ".json", "w")
+    f.write("{")
 
-        # if the 'c' key is pressed, break from the loop
-        if key == ord("c"):
-            image = clone.copy()
-            break
+    image = cv2.imread(frontpath)
+    scale_percent = 20  # percent of original size
+    width = int(image.shape[1] * scale_percent / 100)
+    height = int(image.shape[0] * scale_percent / 100)
+    dim = (width, height)
+    # resize image
+    image = cv2.resize(image, dim, interpolation=cv2.INTER_AREA)
 
-    # write data
-    x1 = refPt[0][0]
-    x2 = refPt[1][0]
-    y1 = refPt[0][1]
-    y2 = refPt[1][1]
+    measure_image(f, front_measurements)
 
-    line_length =  dist = math.sqrt((x2 - x1)**2 + (y2 - y1)**2)
+    image = cv2.imread(sidepath)
+    scale_percent = 20  # percent of original size
+    width = int(image.shape[1] * scale_percent / 100)
+    height = int(image.shape[0] * scale_percent / 100)
+    dim = (width, height)
+    image = cv2.resize(image, dim, interpolation=cv2.INTER_AREA)
 
-    if current_measure != measurements[0]:
-        f.write(",\n")
+    f.write(",\n")
 
-    f.write("\"" + current_measure + "\"" + ": " + str(line_length))
+    measure_image(f, side_measurements)
 
-    # close all open windows
-    cv2.destroyAllWindows()
-f.write("}")
-f.close()
+    f.write("}")
+    f.close()
+
+
+def measure_image(f, front_measurements):
+    global currentWindow, clone, image
+    for current_measure in front_measurements:
+        currentWindow = "Trace across " + current_measure + " width: 'c' to continue"
+        clone = image.copy()
+        cv2.namedWindow(currentWindow)
+        cv2.setMouseCallback(currentWindow, click_and_measure)
+        while True:
+            # display the image and wait for a keypress
+            cv2.imshow(currentWindow, image)
+            key = cv2.waitKey(1) & 0xFF
+
+            # if the 'c' key is pressed, break from the loop
+            if key == ord("c"):
+                image = clone.copy()
+                break
+
+        # write data
+        x1 = refPt[0][0]
+        x2 = refPt[1][0]
+        y1 = refPt[0][1]
+        y2 = refPt[1][1]
+
+        line_length = dist = math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
+
+        if current_measure != front_measurements[0]:
+            f.write(",\n")
+
+        f.write("\"" + current_measure + "\"" + ": " + str(line_length))
+
+        # close all open windows
+        cv2.destroyAllWindows()
+
+
