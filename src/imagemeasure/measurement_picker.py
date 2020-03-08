@@ -91,9 +91,6 @@ def make_measurements(frontpath, sidepath, name):
                           "gluteDepth": "Trace across glute width",
                            "thighDepth": "Trace across thigh width",
                           "calf": "Trace across calf width",
-
-
-
                            }
 
     posture_measurements = {
@@ -171,6 +168,7 @@ def make_measurements(frontpath, sidepath, name):
     measure_image(f, side_measurements)
 
     select_points(f, posture_measurements)
+
     f.write("}")
     f.close()
 
@@ -202,7 +200,7 @@ def measure_image(f, front_measurements):
 
         line_length = math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
 
-        if (current_measure != "height" and current_measure != "coreDepth"):
+        if (current_measure != "height" and current_measure != "chestDepth"):
             f.write(",\n")
 
         f.write("  \"" + current_measure + "\"" + ": " + str(line_length))
@@ -213,11 +211,12 @@ def measure_image(f, front_measurements):
 def select_points(f, posture_measurements):
     global currentWindow, clone, image
     for current_measure in posture_measurements.keys():
+        print("Got here")
         currentWindow = posture_measurements.get(current_measure) + ": 'c' to continue"
         clone = image.copy()
         cv2.namedWindow(currentWindow)
         cv2.setMouseCallback(currentWindow, click_and_record)
-        while cv2.getWindowProperty(currentWindow, 0) < 0:
+        while True:
             # display the image and wait for a keypress
             cv2.imshow(currentWindow, image)
             key = cv2.waitKey(1) & 0xFF
