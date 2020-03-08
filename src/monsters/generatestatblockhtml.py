@@ -22,6 +22,6 @@ def generate_file(m):
                   <p>{1}</p>
                 </property-block>""".format(m.actions[x].name, m.actions[x].desc))
 
-    s += "</stat-block></body></html>"
+    s += "<p style='text-align:center;'><<img src='../src/picture.jpg'></p></stat-block></body></html>"
     f.write(s)
     f.close()

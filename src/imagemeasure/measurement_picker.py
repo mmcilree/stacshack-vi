@@ -3,7 +3,7 @@ import argparse
 import cv2
 import json
 import math
-
+import random
 
 # initialize the list of reference points and boolean indicating
 # whether cropping is being performed or not
@@ -49,6 +49,29 @@ def click_and_record(event, x, y, flags, param):
         cv2.circle(image, refPt[0], 10, (255, 0, 0), 2)
         cv2.imshow(currentWindow, image)
 
+def click_and_crop(event, x, y, flags, param):
+    global refPt, measuring, currentWindow, image, clones
+
+    if event == cv2.EVENT_LBUTTONDOWN:
+        image = clone.copy()
+        refPt = [(x, y)]
+        measuring = True
+
+    if event == cv2.EVENT_MOUSEMOVE:
+        if measuring:
+            image = clone.copy()
+            cv2.rectangle(image, refPt[0], (x,y), (0, 0, 255), 2)
+            cv2.imshow(currentWindow, image)
+
+    elif event == cv2.EVENT_LBUTTONUP:
+        # record the ending (x, y) coordinates and indicate that
+        # the cropping operation is finished
+        measuring = False
+        # draw a line from start to end point
+        refPt.append((x, y))
+        cv2.rectangle(image, refPt[0], (x,y), (0, 0, 255), 2)
+        cv2.imshow(currentWindow, image)
+
 def make_measurements(frontpath, sidepath, name):
     global image, currentWindow, clone
     # load the image, clone it, and setup the mouse callback function
@@ -79,8 +102,12 @@ def make_measurements(frontpath, sidepath, name):
 
     f = open("../JSON/" + name + ".json", "w")
     f.write("{")
-
-    f.write("  \"name\": " + "\"" + name + "\",\n")
+    with open('../monster_resources/name_expand.json') as g:
+        name_expand = json.load(g)
+    print(name_expand["starters"][0])
+    new_name = name_expand["starters"][random.randrange(0, len(name_expand["starters"]))] + name + name_expand["enders"][random.randrange(0, len(name_expand["enders"]))]
+    print(new_name)
+    f.write("  \"name\": " + "\"" + new_name + "\",\n")
 
     image = cv2.imread(frontpath)
     scale_percent = 20  # percent of original size
@@ -91,6 +118,34 @@ def make_measurements(frontpath, sidepath, name):
     image = cv2.resize(image, dim, interpolation=cv2.INTER_AREA)
 
     measure_image(f, front_measurements)
+
+    currentWindow = "Drag and select face: 'c' to continue"
+
+    clone = image.copy()
+    cv2.namedWindow(currentWindow)
+    cv2.setMouseCallback(currentWindow, click_and_crop)
+    while True:
+        # display the image and wait for a keypress
+        cv2.imshow(currentWindow, image)
+        key = cv2.waitKey(1) & 0xFF
+
+        # if the 'c' key is pressed, break from the loop
+        if key == ord("c"):
+            image = clone.copy()
+            break
+
+    # close all open windows
+    cv2.destroyAllWindows()
+
+    print(refPt)
+    cropped = image[(refPt[0][1]):(refPt[1][1]), (refPt[0][0]):(refPt[1][0])]
+    scale_percent = 180  # percent of original size
+    width = int(cropped.shape[1] * scale_percent / 100)
+    height = int(cropped.shape[0] * scale_percent / 100)
+    dim = (width, height)
+    cropped = cv2.resize(cropped, dim, interpolation=cv2.INTER_AREA)
+
+    cv2.imwrite('picture.jpg', cropped)
 
     image = cv2.imread(sidepath)
     scale_percent = 20  # percent of original size
@@ -106,6 +161,8 @@ def make_measurements(frontpath, sidepath, name):
     select_points(f, posture_measurements)
     f.write("}")
     f.close()
+
+    return new_name
 
 
 def measure_image(f, front_measurements):
@@ -148,7 +205,7 @@ def select_points(f, posture_measurements):
         clone = image.copy()
         cv2.namedWindow(currentWindow)
         cv2.setMouseCallback(currentWindow, click_and_record)
-        while True:
+        while cv2.getWindowProperty(currentWindow, 0) < 0:
             # display the image and wait for a keypress
             cv2.imshow(currentWindow, image)
             key = cv2.waitKey(1) & 0xFF
@@ -157,6 +214,7 @@ def select_points(f, posture_measurements):
             if key == ord("c"):
                 image = clone.copy()
                 break
+
         f.write(",\n")
         # write data
         x1 = refPt[0][0]
