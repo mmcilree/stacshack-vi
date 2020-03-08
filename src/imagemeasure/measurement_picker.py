@@ -106,6 +106,7 @@ def make_measurements(frontpath, sidepath, name):
     with open('../monster_resources/name_expand.json') as g:
         name_expand = json.load(g)
     print(name_expand["starters"][0])
+    ##TODO COULD MOVE THIS to Ben's
     new_name = name_expand["starters"][random.randrange(0, len(name_expand["starters"]))] + name + name_expand["enders"][random.randrange(0, len(name_expand["enders"]))]
     print(new_name)
     f.write("  \"name\": " + "\"" + new_name + "\",\n")
