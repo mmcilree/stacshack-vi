@@ -132,7 +132,10 @@ def makeMonster(name, str, dex, con, intelligence, wis, cha):
         rand2 = math.floor(random() * float(len(abilities)))
         abilities = fiveClosest[rand].abilities
 
-    ability1 = abilities[rand2]
+    try :
+        ability1 = abilities[rand2]
+    except IndexError:
+        ability1 = abilities[0]
 
     rand = math.floor(random() * 5)
     abilities = fiveClosest[rand].abilities
@@ -145,8 +148,10 @@ def makeMonster(name, str, dex, con, intelligence, wis, cha):
         rand2 = math.floor(random() * float(len(abilities)))
         abilities = fiveClosest[rand].abilities
 
-
-    ability2 = abilities[rand2]
+    try:
+        ability2 = abilities[rand2]
+    except IndexError:
+        ability2 = abilities[0]
 
     action = []
     for i in range (0, ACTION_NUMBER + 1):

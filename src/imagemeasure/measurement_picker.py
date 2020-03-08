@@ -139,18 +139,18 @@ def make_measurements(frontpath, sidepath, name):
     print(refPt)
     cropped = image[(refPt[0][1]):(refPt[1][1]), (refPt[0][0]):(refPt[1][0])]
 
-    edges = cv2.Canny(cropped, 100, 200)
+    '''edges = cv2.Canny(cropped, 100, 200)
     edges = cv2.bitwise_not(edges)
     edges = cv2.cvtColor(edges, cv2.COLOR_GRAY2RGB)
-    combined = cv2.addWeighted(cropped, 0.4, edges, 0.1, 0)
+    combined = cv2.addWeighted(cropped, 0.4, edges, 0.1, 0)'''
 
     scale_percent = 180  # percent of original size
-    width = int(combined.shape[1] * scale_percent / 100)
-    height = int(combined.shape[0] * scale_percent / 100)
+    width = int(cropped.shape[1] * scale_percent / 100)
+    height = int(cropped.shape[0] * scale_percent / 100)
     dim = (width, height)
-    combined = cv2.resize(combined, dim, interpolation=cv2.INTER_AREA)
+    cropped = cv2.resize(cropped, dim, interpolation=cv2.INTER_AREA)
 
-    cv2.imwrite('picture.jpg', combined)
+    cv2.imwrite('picture.jpg', cropped)
 
 
 

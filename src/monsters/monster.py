@@ -29,7 +29,7 @@ class Monster:
         x = abs(str - self.str) ** CLOSENESS_MODIFIER + abs(self.dex - dex) ** CLOSENESS_MODIFIER + abs(
             self.con - con) ** CLOSENESS_MODIFIER + abs(
             self.int - int) ** CLOSENESS_MODIFIER + abs(self.wis - wis) ** CLOSENESS_MODIFIER + abs(
-            self.con - con) ** CLOSENESS_MODIFIER
+            self.cha - cha) ** CLOSENESS_MODIFIER
         return x
 
     def __str__(self):
