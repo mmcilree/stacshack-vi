@@ -8,11 +8,15 @@
   "calf": 5.9,
   "forearm": 5.9,
   "thigh": 33,
-  "abdomen": 71,
+  "torso": 71,
 
-  "ShoulderDepth": 35,
-  "CoreDepth": 44,
-  "HipDepth": 44,
-  "GluteDepth": 44,
-  "ThighDepth": 33
+  "chestDepth": 35,
+  "coreDepth": 44,
+  "gluteDepth": 44,
+  "thighDepth": 33,
+
+  "neckNape": 0,
+  "shoulderBlades": 10,
+  "backSmall": 0,
+  "tailbone": 10
 }

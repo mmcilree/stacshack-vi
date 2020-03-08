@@ -1,7 +1,7 @@
 import json
-from .monster import *
-from .monsterability import *
-from .generatestatblockhtml import *
+from monsters.monster import *
+from monsters.monsterability import *
+from monsters.generatestatblockhtml import *
 
 from random import seed
 from random import random
@@ -9,7 +9,7 @@ from random import random
 import math
 
 JSON_FILE = "../monster_resources/5e-SRD-Monsters.json"
-ACTION_NUMBER = 2
+ACTION_NUMBER = 3
 SPECIAL_ABILITY_NUMBER = 1
 
 
@@ -81,13 +81,22 @@ def makeMonster(name, str, dex, con, intelligence, wis, cha):
     for i in range(0, len(name)):
         hashed += ord(name[i])
 
-
+    #TODO uncomment after testing
     seed(hashed)
 
     cr = 0
     for i in fiveClosest:
         cr = cr + eval(i.cr)
-    cr = math.floor(cr / 5)
+
+    if cr < 1:
+        if cr < 0.125:
+            cr = 1/8
+        elif 0.125 < cr < 0.25:
+            cr = 1/4
+        elif 0.25 < cr < 1/2:
+            cr = 1/2
+    else:
+        cr = math.floor(cr / 5)
 
     type = "Humanoid"
 
@@ -104,7 +113,6 @@ def makeMonster(name, str, dex, con, intelligence, wis, cha):
 
     rand = math.floor(random() * 5)
 
-    print(fiveClosest[rand])
     senses = fiveClosest[rand].senses
 
     ac = 0
@@ -118,7 +126,6 @@ def makeMonster(name, str, dex, con, intelligence, wis, cha):
 
     rand = math.floor(random() * 5)
     rand2 = math.floor(random() * float(len(abilities)))
-    print(fiveClosest[rand])
 
     while len(fiveClosest[rand].abilities) == 0:
         rand = math.floor(random() * 5)
@@ -132,32 +139,50 @@ def makeMonster(name, str, dex, con, intelligence, wis, cha):
 
     rand = math.floor(random() * 5)
     rand2 = math.floor(random() * float(len(abilities)))
-    print(fiveClosest[rand])
 
-    while len(fiveClosest[rand].abilities) == 0:
+    while len(fiveClosest[rand].abilities) == 0 or abilities[rand2] == ability1:
         rand = math.floor(random() * 5)
         rand2 = math.floor(random() * float(len(abilities)))
         abilities = fiveClosest[rand].abilities
 
+
     ability2 = abilities[rand2]
 
-    rand = math.floor(random() * 5)
-    actions = fiveClosest[rand].actions
+    action = []
+    for i in range (0, ACTION_NUMBER + 1):
 
-    rand = math.floor(random() * 5)
-    rand2 = math.floor(random() * float(len(actions)))
-    print(fiveClosest[rand])
-
-    while len(fiveClosest[rand].actions) == 0:
         rand = math.floor(random() * 5)
-        rand2 = math.floor(random() * float(len(actions)))
         actions = fiveClosest[rand].actions
 
-    action = actions[rand2]
-    print(action)
+        rand = math.floor(random() * 5)
+        rand2 = math.floor(random() * float(len(actions)))
+
+        while len(fiveClosest[rand].actions) == 0:
+            rand = math.floor(random() * 5)
+            rand2 = math.floor(random() * float(len(actions)))
+            actions = fiveClosest[rand].actions
+
+
+        if "Multiattack" in actions[rand2].name:
+            continue
+
+        skip = False
+        for i in action:
+            if actions[rand2].name in i.name:
+                skip = True
+                break
+
+        if skip:
+            continue
+
+        action.append(actions[rand2])
 
     allAbilities = [ability1, ability2]
-    allActions = [action]
+    allActions = action
+
+    for i in fiveClosest:
+        print(i.name)
+
 
     result = Monster(name, cr, type, alignment, hp, speed, str, dex, con, intelligence, wis, cha, senses, ac, allAbilities, allActions)
     result.fixActions()
@@ -169,3 +194,4 @@ def makeMonster(name, str, dex, con, intelligence, wis, cha):
 def make(name, str, dex, con, int, wis, cha):
     me = makeMonster(name, str, dex, con, int, wis, cha)
     generate_file(me)
+

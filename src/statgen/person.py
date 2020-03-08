@@ -19,11 +19,10 @@ class Person:
 
         self.measure.append(obj["torso"]) # 13
 
-        # self.measure.append(obj["HeadOffset"]) # 13
-        # self.measure.append(obj["ShoulderOffset"]) # 13
-        # self.measure.append(obj["BackOffset"]) # 13
-        # self.measure.append(obj["HipOffset"]) # 13
-        # self.measure.append(obj["GluteOffset"]) # 13
+        self.measure.append(obj["neckNape"]) # 14
+        self.measure.append(obj["shoulderBlades"]) # 15
+        self.measure.append(obj["backSmall"]) # 16
+        self.measure.append(obj["tailbone"]) # 17
 
         self.generateRatios()
         self.generateRelativeMuscleArea()
@@ -50,10 +49,10 @@ class Person:
         self.ratios.append(self.measure[7] / self.measure[1]) # 6
 
         # Constitution Ratios
-        # Shoulders
-        self.ratios.append(self.measure[2] / (self.measure[8] * 2)) # 7
-        # Core
-        self.ratios.append(self.measure[4] / (self.measure[9] / 2)) # 8
+        # Chest Depth Shoulders
+        self.ratios.append(self.measure[8] / (self.measure[2])) # 7
+        # Core Depth to Waist
+        self.ratios.append(self.measure[9] / (self.measure[1])) # 8
         # Waist
         # self.ratios.append(self.measure[1] / (self.measure[10])) # 9
         self.ratios.append(0)
@@ -82,6 +81,7 @@ class Person:
         self.strDelta = 0
         for i in range(12, 18):
             self.strDelta += self.ratios[i]
+        self.strDelta = self.strDelta ** 6 / 4
 
 
     def generateFastTwitchMuscle(self):
@@ -94,6 +94,11 @@ class Person:
         self.dexDelta += self.ratios[0]  * 2
         self.dexDelta -= self.ratios[17] * 3
 
+        self.dexDelta -= abs(self.measure[14] - self.measure[16]) * .04
+        self.dexDelta -= abs(self.measure[15] - self.measure[17]) * .04
+
+        self.dexDelta = self.dexDelta * .3
+
     def generateGreekGodRatios(self):
         self.ggDelta = []
         self.ggDelta.append(abs(.445 - self.ratios[0]))
@@ -104,12 +109,12 @@ class Person:
         self.ggDelta.append(abs(.85 - self.ratios[5]))
         self.ggDelta.append(abs(.75 - self.ratios[6]))
 
-        self.chrDelta = 0
+        self.chaDelta = 0
         for i in range(0, len(self.ggDelta)):
             if i < 4 :
-                self.chrDelta += self.ggDelta[i]
+                self.chaDelta += self.ggDelta[i]
             else :
-                self.chrDelta += self.ggDelta[i] * .5
+                self.chaDelta += self.ggDelta[i] * .5
 
     def generateCylinderDelta(self):
         self.conDelta = 0
@@ -149,5 +154,5 @@ class Person:
         toReturn += "\tStrength Delta:  " + str(self.strDelta) + "\n"
         toReturn += "\tDexterity Delta: " + str(self.dexDelta) + "\n"
         toReturn += "\tHench Delta:     " + str(self.conDelta) + "\n"
-        toReturn += "\tGreek God Delta: " + str(self.chrDelta) + "\n"
+        toReturn += "\tGreek God Delta: " + str(self.chaDelta) + "\n"
         return toReturn

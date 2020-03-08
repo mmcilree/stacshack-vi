@@ -36,6 +36,15 @@ class Monster:
         return self.name
 
     def fixActions(self):
+        ability1Name = self.abilities[0].monsterName
+        ability2Name = self.abilities[1].monsterName
+        actionName = self.actions[0].monsterName
+
+        ability1NameSplit = ability1Name.split()
+        ability2NameSplit = ability2Name.split()
+        actionNameSplit = actionName.split()
+
+
         actionSingular = re.compile("(The)? "+self.actions[0].monsterName, re.IGNORECASE)
         ability1Singular = re.compile("(The)? "+self.abilities[0].monsterName, re.IGNORECASE)
         ability2Singular = re.compile("(The)? "+self.abilities[1].monsterName, re.IGNORECASE)
@@ -63,6 +72,117 @@ class Monster:
             self.actions[0].desc = re.sub(checker, self.name, self.actions[0].desc)
             self.abilities[0].desc = re.sub(checker, self.name, self.abilities[0].desc)
             self.abilities[1].desc = re.sub(checker, self.name, self.abilities[1].desc)
+
+
+
+
+        if (len(ability1NameSplit)):
+            if len(ability1NameSplit) == 2:
+                for namePart in ability1NameSplit:
+                    abilityRX4 = re.compile(namePart, re.IGNORECASE)
+                    abilityRX3 = re.compile("the " + namePart, re.IGNORECASE)
+                    abilityRX2 = re.compile(namePart + "'s", re.IGNORECASE)
+                    abilityRX1 = re.compile("the " + namePart + "'s", re.IGNORECASE)
+
+                    self.abilities[0].desc = re.sub(abilityRX1, self.name + "'s", self.abilities[0].desc)
+                    self.abilities[0].desc = re.sub(abilityRX2, self.name + "'s", self.abilities[0].desc)
+                    self.abilities[0].desc = re.sub(abilityRX3, self.name, self.abilities[0].desc)
+                    self.abilities[0].desc = re.sub(abilityRX4, self.name, self.abilities[0].desc)
+
+            if len(ability1NameSplit) == 3:
+                abilityRX4 = re.compile(ability1NameSplit[0], re.IGNORECASE)
+                abilityRX3 = re.compile("the " + ability1NameSplit[0] , re.IGNORECASE)
+                abilityRX2 = re.compile(ability1NameSplit[0] + "'s", re.IGNORECASE)
+                abilityRX1 = re.compile("the " + ability1NameSplit[0] + "'s", re.IGNORECASE)
+
+                self.abilities[0].desc = re.sub(abilityRX1, self.name + "'s", self.abilities[0].desc)
+                self.abilities[0].desc = re.sub(abilityRX2, self.name + "'s", self.abilities[0].desc)
+                self.abilities[0].desc = re.sub(abilityRX3, self.name, self.abilities[0].desc)
+                self.abilities[0].desc = re.sub(abilityRX4, self.name, self.abilities[0].desc)
+
+                abilityRX4 = re.compile(ability1NameSplit[2], re.IGNORECASE)
+                abilityRX3 = re.compile("the " + ability1NameSplit[2], re.IGNORECASE)
+                abilityRX2 = re.compile(ability1NameSplit[2] + "'s", re.IGNORECASE)
+                abilityRX1= re.compile("the " + ability1NameSplit[2] + "'s", re.IGNORECASE)
+
+                self.abilities[0].desc = re.sub(abilityRX1, self.name, self.abilities[0].desc)
+                self.abilities[0].desc = re.sub(abilityRX2, self.name, self.abilities[0].desc)
+                self.abilities[0].desc = re.sub(abilityRX3, self.name, self.abilities[0].desc)
+                self.abilities[0].desc = re.sub(abilityRX4, self.name, self.abilities[0].desc)
+
+
+
+
+        if (len(ability2NameSplit)):
+            if len(ability2NameSplit) == 2:
+                for namePart in ability2NameSplit:
+                    abilityRX4 = re.compile(namePart, re.IGNORECASE)
+                    abilityRX3 = re.compile("the " + namePart, re.IGNORECASE)
+                    abilityRX2 = re.compile(namePart + "'s", re.IGNORECASE)
+                    abilityRX1 = re.compile("the " + namePart + "'s", re.IGNORECASE)
+
+                    self.abilities[1].desc = re.sub(abilityRX1, self.name + "'s", self.abilities[1].desc)
+                    self.abilities[1].desc = re.sub(abilityRX2, self.name + "'s", self.abilities[1].desc)
+                    self.abilities[1].desc = re.sub(abilityRX3, self.name, self.abilities[1].desc)
+                    self.abilities[1].desc = re.sub(abilityRX4, self.name, self.abilities[1].desc)
+
+            if len(ability2NameSplit) == 3:
+                abilityRX4 = re.compile(ability2NameSplit[0], re.IGNORECASE)
+                abilityRX3 = re.compile("the " + ability2NameSplit[0], re.IGNORECASE)
+                abilityRX2 = re.compile(ability2NameSplit[0] + "'s",re.IGNORECASE)
+                abilityRX1 = re.compile("the " + ability2NameSplit[0] + "'s",re.IGNORECASE)
+
+                self.abilities[1].desc = re.sub(abilityRX1, self.name + "'s", self.abilities[1].desc)
+                self.abilities[1].desc = re.sub(abilityRX2, self.name + "'s", self.abilities[1].desc)
+                self.abilities[1].desc = re.sub(abilityRX3, self.name, self.abilities[1].desc)
+                self.abilities[1].desc = re.sub(abilityRX4, self.name, self.abilities[1].desc)
+
+                abilityRX4 = re.compile(ability2NameSplit[2], re.IGNORECASE)
+                abilityRX3 = re.compile("the " + ability2NameSplit[2], re.IGNORECASE)
+                abilityRX2 = re.compile(ability2NameSplit[2] + "'s",re.IGNORECASE)
+                abilityRX1 = re.compile("the " + ability2NameSplit[2] + "'s", re.IGNORECASE)
+
+                self.abilities[1].desc = re.sub(abilityRX1, self.name + "'s", self.abilities[1].desc)
+                self.abilities[1].desc = re.sub(abilityRX2, self.name + "'s", self.abilities[1].desc)
+                self.abilities[1].desc = re.sub(abilityRX3, self.name, self.abilities[1].desc)
+                self.abilities[1].desc = re.sub(abilityRX4, self.name, self.abilities[1].desc)
+
+
+
+
+        if (len(actionNameSplit)):
+            if len(actionNameSplit) == 2:
+                for namePart in actionNameSplit:
+                    abilityRX4 = re.compile(namePart, re.IGNORECASE)
+                    abilityRX3 = re.compile("the " + namePart, re.IGNORECASE)
+                    abilityRX2 = re.compile(namePart + "'s", re.IGNORECASE)
+                    abilityRX1 = re.compile("the " + namePart + "'s", re.IGNORECASE)
+
+                    self.actions[0].desc = re.sub(abilityRX1, self.name + "'s", self.actions[0].desc)
+                    self.actions[0].desc = re.sub(abilityRX2, self.name + "'s", self.actions[0].desc)
+                    self.actions[0].desc = re.sub(abilityRX3, self.name, self.actions[0].desc)
+                    self.actions[0].desc = re.sub(abilityRX4, self.name, self.actions[0].desc)
+
+            if len(actionNameSplit) == 3:
+                abilityRX4 = re.compile(actionNameSplit[0], re.IGNORECASE)
+                abilityRX3 = re.compile("the " + actionNameSplit[0], re.IGNORECASE)
+                abilityRX2 = re.compile(actionNameSplit[0] + "'s", re.IGNORECASE)
+                abilityRX1 = re.compile("the " + actionNameSplit[0] + "'s", re.IGNORECASE)
+
+                self.actions[0].desc = re.sub(abilityRX1, self.name + "'s", self.actions[0].desc)
+                self.actions[0].desc = re.sub(abilityRX2, self.name + "'s", self.actions[0].desc)
+                self.actions[0].desc = re.sub(abilityRX3, self.name, self.actions[0].desc)
+                self.actions[0].desc = re.sub(abilityRX4, self.name, self.actions[0].desc)
+
+                abilityRX4 = re.compile(actionNameSplit[2], re.IGNORECASE)
+                abilityRX3 = re.compile("the " + actionNameSplit[2], re.IGNORECASE)
+                abilityRX2 = re.compile(actionNameSplit[2] + "'s", re.IGNORECASE)
+                abilityRX1= re.compile("the " + actionNameSplit[2] + "'s", re.IGNORECASE)
+
+                self.actions[0].desc = re.sub(abilityRX1, self.name + "'s", self.actions[0].desc)
+                self.actions[0].desc = re.sub(abilityRX2, self.name + "'s", self.actions[0].desc)
+                self.actions[0].desc = re.sub(abilityRX3, self.name, self.actions[0].desc)
+                self.actions[0].desc = re.sub(abilityRX4, self.name, self.actions[0].desc)
 
     def fixCr(self):
         self.cr = re.sub("0.125", "1/8", str(self.cr))

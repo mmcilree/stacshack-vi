@@ -79,7 +79,7 @@
 
   :host([data-two-column]) #content-wrap {
     /* One column is 400px and the gap between them is 40px. */
-    width: 400px;
+    width: 840px;
   }
 
   ::slotted(h3) {
@@ -278,7 +278,7 @@ function elementClass(contentNode) {
 </style><slot></slot></template><script>{
   let templateElement = document.getElementById('property-block');
   createCustomElement('property-block', templateElement.content);
-}</script><stat-block data-two-column="" style="--data-content-height: 672px;">
+}</script><stat-block data-two-column="" style="--data-content-height: 600px;">
     <creature-heading>
       <h1>Matthew</h1>
       <h2>Medium humanoid, Neutral</h2>
@@ -287,35 +287,38 @@ function elementClass(contentNode) {
     <top-stats>
       <property-line>
         <h4>Armor Class</h4>
-        <p>10</p>
+        <p>11</p>
       </property-line>
       <property-line>
         <h4>Hit Points</h4>
-        <p>24</p>
+        <p>30</p>
       </property-line>
       <property-line>
         <h4>Speed</h4>
-        <p>5 ft.</p>
+        <p>10 ft., climb 10 ft.</p>
       </property-line>
 
-      <abilities-block data-cha="12" data-con="-633" data-dex="11" data-int="-633" data-str="13" data-wis="-633"></abilities-block>
+      <abilities-block data-cha="9" data-con="8" data-dex="10" data-int="-135" data-str="9" data-wis="-135"></abilities-block>
       <property-line>
         <h4>Senses</h4>
-        <p>blindsight 10 ft., passive Perception 8</p>
+        <p>blindsight 60 ft. (blind beyond this radius), passive Perception 8</p>
       </property-line>
       <property-line>
         <h4>Challenge</h4>
-        <p> 0</p>
+        <p> 1</p>
       </property-line>
     </top-stats>
   
 <property-block>
-                  <h4>Swarm</h4>
-                  <p>The swarm can occupy another creature's space and vice versa, and the swarm can move through any opening large enough for a Tiny insect. The swarm can't regain hit points or gain temporary hit points.</p>
+                  <h4>False Appearance</h4>
+                  <p>While Matthew remains motionless, it is indistinguishable from a normal suit of Matthew.</p>
                 </property-block><property-block>
-                  <h4>Antimagic Susceptibility</h4>
-                  <p>The rug is incapacitated while in the area of an antimagic field. If targeted by dispel magic, the rug must succeed on a Constitution saving throw against the caster's spell save DC or fall unconscious for 1 minute.</p>
+                  <h4>Damage Transfer</h4>
+                  <p>While it is grappling a creature, Matthew takes only half the damage dealt to it, and the creature grappled by Matthew takes the other half.</p>
                 </property-block>  <h3>Actions</h3><property-block>
-                  <h4>Bites</h4>
-                  <p>Melee Weapon Attack: +5 to hit, reach 0 ft., one creature in the swarm's space. Hit: 14 (4d6) piercing damage, or 7 (2d6) piercing damage if the swarm has half of its hit points or fewer.</p>
+                  <h4>Smother</h4>
+                  <p>Melee Weapon Attack: +5 to hit, reach 5 ft., one Medium or smaller creature. Hit: The creature is grappled (escape DC 13). Until this grapple ends, the target is restrained, blinded, and at risk of suffocating, and Matthew can't smother another target. In addition, at the start of each of the target's turns, the target takes 10 (2d6 + 3) bludgeoning damage.</p>
+                </property-block><property-block>
+                  <h4>Slam</h4>
+                  <p>Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 5 (1d6 + 2) bludgeoning damage.</p>
                 </property-block></stat-block></body></html>
