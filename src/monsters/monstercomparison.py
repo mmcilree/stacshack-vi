@@ -135,7 +135,7 @@ def makeMonster(name, str, dex, con, intelligence, wis, cha):
     try :
         ability1 = abilities[rand2]
     except IndexError:
-        ability1 = abilities[0]
+        ability1 = "Boring - nothing particularly interesting happens, they don't even look particularly cool doing it"
 
     rand = math.floor(random() * 5)
     abilities = fiveClosest[rand].abilities
