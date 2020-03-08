@@ -1,7 +1,7 @@
 import numpy as np
 import json
 import math
-from person import Person
+from .person import Person
 
 MAX_LIMIT = 200
 MIN_LIMIT = 0
