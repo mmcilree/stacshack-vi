@@ -1,10 +1,13 @@
 import numpy as np
 import json
 import math
-from. person import Person
+from person import Person
+
+MAX_LIMIT = 200
+MIN_LIMIT = 0
 
 def main():
-    genStats()
+    genStats(input("Filename: "))
 
 def genStats(jsonName):
     filename = "../JSON/" + jsonName + ".json"
@@ -30,15 +33,15 @@ def genStats(jsonName):
     return [STR, DEX, CON, INT, WIS, CHR]
 
 def genStrength(person):
-    strength = min(20, max(4, (person.strDelta - .1) ** .32 * 60 - 47))
+    strength = min(MAX_LIMIT, max(MIN_LIMIT, 4 + (16 / (1 + math.e ** (-2.9 * (person.strDelta - .77))))))
     return round(strength)
 
 def genDexterity(person):
-    dexterity = min(20, max(4, (person.dexDelta / 3 - .1) ** .32 * 60 - 47))
+    dexterity = min(MAX_LIMIT, max(MIN_LIMIT, 5 + (16 / (1 + math.e ** (-4 * (person.dexDelta - .77))))))
     return round(dexterity)
 
 def genConstitution(person):
-    constitution = 20 - (math.log(person.conDelta + 1) * 3) ** 4
+    constitution = min(MAX_LIMIT, max(MIN_LIMIT, 5 + (16 / (1 + math.e ** (9.5 * (person.conDelta - 2.1))))))
     return round(constitution)
 
 def genInteligence(person):
@@ -50,7 +53,7 @@ def genWisdom(person):
     return round(wisdom)
 
 def genCharisma(person):
-    charisma = min(20, 30 - math.log(person.chrDelta * 10 - 5) * 8)
+    charisma = min(MAX_LIMIT, max(MIN_LIMIT, 27 - math.log(person.chaDelta * 3) * 12))
     return round(charisma)
 
 if __name__== "__main__":
