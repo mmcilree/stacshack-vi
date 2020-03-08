@@ -1,7 +1,7 @@
 import json
-from .monster import *
-from .monsterability import *
-from .generatestatblockhtml import *
+from monsters.monster import *
+from monsters.monsterability import *
+from monsters.generatestatblockhtml import *
 
 from random import seed
 from random import random
@@ -104,7 +104,6 @@ def makeMonster(name, str, dex, con, intelligence, wis, cha):
 
     rand = math.floor(random() * 5)
 
-    print(fiveClosest[rand])
     senses = fiveClosest[rand].senses
 
     ac = 0
@@ -118,7 +117,6 @@ def makeMonster(name, str, dex, con, intelligence, wis, cha):
 
     rand = math.floor(random() * 5)
     rand2 = math.floor(random() * float(len(abilities)))
-    print(fiveClosest[rand])
 
     while len(fiveClosest[rand].abilities) == 0:
         rand = math.floor(random() * 5)
@@ -132,7 +130,6 @@ def makeMonster(name, str, dex, con, intelligence, wis, cha):
 
     rand = math.floor(random() * 5)
     rand2 = math.floor(random() * float(len(abilities)))
-    print(fiveClosest[rand])
 
     while len(fiveClosest[rand].abilities) == 0:
         rand = math.floor(random() * 5)
@@ -146,7 +143,6 @@ def makeMonster(name, str, dex, con, intelligence, wis, cha):
 
     rand = math.floor(random() * 5)
     rand2 = math.floor(random() * float(len(actions)))
-    print(fiveClosest[rand])
 
     while len(fiveClosest[rand].actions) == 0:
         rand = math.floor(random() * 5)
@@ -154,10 +150,13 @@ def makeMonster(name, str, dex, con, intelligence, wis, cha):
         actions = fiveClosest[rand].actions
 
     action = actions[rand2]
-    print(action)
 
     allAbilities = [ability1, ability2]
     allActions = [action]
+
+    for i in fiveClosest:
+        print(i.name)
+
 
     result = Monster(name, cr, type, alignment, hp, speed, str, dex, con, intelligence, wis, cha, senses, ac, allAbilities, allActions)
     result.fixActions()
@@ -169,3 +168,4 @@ def makeMonster(name, str, dex, con, intelligence, wis, cha):
 def make(name, str, dex, con, int, wis, cha):
     me = makeMonster(name, str, dex, con, int, wis, cha)
     generate_file(me)
+

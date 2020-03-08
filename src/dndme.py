@@ -1,6 +1,6 @@
-from src.imagemeasure import initial_form, measurement_picker
-from src.monsters import monstercomparison, displayhtml
-from src.statgen import statGenerator
+from imagemeasure import initial_form, measurement_picker
+from monsters import monstercomparison, displayhtml
+from statgen import statGenerator
 
 """name = initial_form.survey()
 front_path = initial_form.select_front_image()
