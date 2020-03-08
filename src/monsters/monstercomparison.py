@@ -1,7 +1,7 @@
 import json
-from monsters.monster import *
-from monsters.monsterability import *
-from monsters.generatestatblockhtml import *
+from .monster import *
+from .monsterability import *
+from .generatestatblockhtml import *
 
 from random import seed
 from random import random

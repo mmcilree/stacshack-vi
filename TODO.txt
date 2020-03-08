@@ -1,3 +1,8 @@
-1. Make questionairre in HTML and CSS for mental stats
-Add picture for the statblock
-Presentation?
+1. Finish questionaire in HTML and CSS for mental stats -- not sure where to go from here.
+    Might need to do something radical.
+2. Make sure everything compiles together (sort out the packaging issue).
+
+[DONE] Add picture for the statblock
+3. Presentation?
+4. Incorporate mental stats into questionaire
+
