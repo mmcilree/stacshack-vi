@@ -8,6 +8,9 @@ from tkinter import filedialog, simpledialog, messagebox
 
 import cv2
 
+def quizmessage():
+	messagebox.askokcancel("Mental attributes", "You will now complete a short quiz to determine your mental monster stats. Continue?")
+
 def frontmessage():
 	messagebox.askokcancel("Physical attributes", "You can now take measurements to determine your physical monster stats. Continue?")
 

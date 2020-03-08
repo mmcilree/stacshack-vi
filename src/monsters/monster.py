@@ -158,10 +158,11 @@ class Monster:
                     abilityRX2 = re.compile(namePart + "'s", re.IGNORECASE)
                     abilityRX1 = re.compile("the " + namePart + "'s", re.IGNORECASE)
 
-                    self.actions[0].desc = re.sub(abilityRX1, self.name + "'s", self.actions[0].desc)
-                    self.actions[0].desc = re.sub(abilityRX2, self.name + "'s", self.actions[0].desc)
-                    self.actions[0].desc = re.sub(abilityRX3, self.name, self.actions[0].desc)
-                    self.actions[0].desc = re.sub(abilityRX4, self.name, self.actions[0].desc)
+                    for action in self.actions:
+                        action.desc = re.sub(abilityRX1, self.name + "'s", action.desc)
+                        action.desc = re.sub(abilityRX2, self.name + "'s", action.desc)
+                        action.desc = re.sub(abilityRX3, self.name, action.desc)
+                        action.desc = re.sub(abilityRX4, self.name, action.desc)
 
             if len(actionNameSplit) == 3:
                 abilityRX4 = re.compile(actionNameSplit[0], re.IGNORECASE)
@@ -169,20 +170,22 @@ class Monster:
                 abilityRX2 = re.compile(actionNameSplit[0] + "'s", re.IGNORECASE)
                 abilityRX1 = re.compile("the " + actionNameSplit[0] + "'s", re.IGNORECASE)
 
-                self.actions[0].desc = re.sub(abilityRX1, self.name + "'s", self.actions[0].desc)
-                self.actions[0].desc = re.sub(abilityRX2, self.name + "'s", self.actions[0].desc)
-                self.actions[0].desc = re.sub(abilityRX3, self.name, self.actions[0].desc)
-                self.actions[0].desc = re.sub(abilityRX4, self.name, self.actions[0].desc)
+                for action in self.actions:
+                    action.desc = re.sub(abilityRX1, self.name + "'s", action.desc)
+                    action.desc = re.sub(abilityRX2, self.name + "'s", action.desc)
+                    action.desc = re.sub(abilityRX3, self.name, action.desc)
+                    action.desc = re.sub(abilityRX4, self.name, action.desc)
 
                 abilityRX4 = re.compile(actionNameSplit[2], re.IGNORECASE)
                 abilityRX3 = re.compile("the " + actionNameSplit[2], re.IGNORECASE)
                 abilityRX2 = re.compile(actionNameSplit[2] + "'s", re.IGNORECASE)
                 abilityRX1= re.compile("the " + actionNameSplit[2] + "'s", re.IGNORECASE)
 
-                self.actions[0].desc = re.sub(abilityRX1, self.name + "'s", self.actions[0].desc)
-                self.actions[0].desc = re.sub(abilityRX2, self.name + "'s", self.actions[0].desc)
-                self.actions[0].desc = re.sub(abilityRX3, self.name, self.actions[0].desc)
-                self.actions[0].desc = re.sub(abilityRX4, self.name, self.actions[0].desc)
+                for action in self.actions:
+                    action.desc = re.sub(abilityRX1, self.name + "'s", action.desc)
+                    action.desc = re.sub(abilityRX2, self.name + "'s", action.desc)
+                    action.desc = re.sub(abilityRX3, self.name, action.desc)
+                    action.desc = re.sub(abilityRX4, self.name, action.desc)
 
     def fixCr(self):
         self.cr = re.sub("0.125", "1/8", str(self.cr))

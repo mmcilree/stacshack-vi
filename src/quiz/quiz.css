@@ -1,0 +1,21 @@
+.background {
+  background-color: #e0ab60;
+  height: 580px;
+  width: 400px;
+  padding-left: 5px;
+  padding-right: 5px
+}
+
+.heading {
+font-style: italic;
+font font-family: "Times New Roman", Georgia, serif;
+}
+
+.questions_section {
+
+}
+
+.question {
+  float: left;
+  margin-bottom: 10px
+}
