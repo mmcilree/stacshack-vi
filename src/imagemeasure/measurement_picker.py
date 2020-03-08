@@ -4,6 +4,7 @@ import cv2
 import json
 import math
 import random
+from .initial_form import *
 
 # initialize the list of reference points and boolean indicating
 # whether cropping is being performed or not

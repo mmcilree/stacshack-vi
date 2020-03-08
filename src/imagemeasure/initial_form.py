@@ -8,6 +8,9 @@ from tkinter import filedialog, simpledialog, messagebox
 
 import cv2
 
+def frontmessage():
+	messagebox.askokcancel("Physical attributes", "You can now take measurements to determine your physical monster stats. Continue?")
+
 def survey():
 	root = tkinter.Tk()
 	center(root)
