@@ -82,7 +82,7 @@ def makeMonster(name, str, dex, con, intelligence, wis, cha):
         hashed += ord(name[i])
 
     #TODO uncomment after testing
-    #seed(hashed)
+    seed(hashed)
 
     cr = 0
     for i in fiveClosest:
