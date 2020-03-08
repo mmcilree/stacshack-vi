@@ -77,20 +77,23 @@ def make_measurements(frontpath, sidepath, name):
     # load the image, clone it, and setup the mouse callback function
 
     front_measurements = {"height" : "Trace across full height",
-                    "waist": "Trace across waist width",
-                    "shoulders": "Trace across shoulder with",
-                    "neck": "Trace across neck width",
-                    "chest": "Trace across chest width",
-                    "thigh": "Trace across thigh width",
-                    "torso":"Trace across torso width"}
+                          "neck": "Trace across neck width",
+                          "shoulders": "Trace across shoulder with",
+                          "chest": "Trace across chest width",
+                          "torso": "Trace across torso width",
+                          "waist": "Trace across waist width",
+                          "thigh": "Trace across thigh width"}
 
-    side_measurements = { "coreDepth": "Trace across core width",
+    side_measurements = { "chestDepth": "Trace across chest width",
+                           "coreDepth": "Trace across core width",
                           "bicep": "Trace across bicep width",
                           "forearm": "Trace across forearm width",
-                          "calf": "Trace across calf width",
-                          "thighDepth": "Trace across thigh width",
                           "gluteDepth": "Trace across glute width",
-                          "chestDepth": "Trace across chest width"
+                           "thighDepth": "Trace across thigh width",
+                          "calf": "Trace across calf width",
+
+
+
                            }
 
     posture_measurements = {
@@ -114,10 +117,7 @@ def make_measurements(frontpath, sidepath, name):
     width = int(image.shape[1] * scale_percent / 100)
     height = int(image.shape[0] * scale_percent / 100)
     dim = (width, height)
-    # resize image
     image = cv2.resize(image, dim, interpolation=cv2.INTER_AREA)
-
-    measure_image(f, front_measurements)
 
     currentWindow = "Drag and select face: 'c' to continue"
 
@@ -139,13 +139,25 @@ def make_measurements(frontpath, sidepath, name):
 
     print(refPt)
     cropped = image[(refPt[0][1]):(refPt[1][1]), (refPt[0][0]):(refPt[1][0])]
-    scale_percent = 180  # percent of original size
-    width = int(cropped.shape[1] * scale_percent / 100)
-    height = int(cropped.shape[0] * scale_percent / 100)
-    dim = (width, height)
-    cropped = cv2.resize(cropped, dim, interpolation=cv2.INTER_AREA)
 
-    cv2.imwrite('picture.jpg', cropped)
+    edges = cv2.Canny(cropped, 100, 200)
+    edges = cv2.bitwise_not(edges)
+    edges = cv2.cvtColor(edges, cv2.COLOR_GRAY2RGB)
+    combined = cv2.addWeighted(cropped, 0.4, edges, 0.1, 0)
+
+    scale_percent = 180  # percent of original size
+    width = int(combined.shape[1] * scale_percent / 100)
+    height = int(combined.shape[0] * scale_percent / 100)
+    dim = (width, height)
+    combined = cv2.resize(combined, dim, interpolation=cv2.INTER_AREA)
+
+    cv2.imwrite('picture.jpg', combined)
+
+
+
+    measure_image(f, front_measurements)
+
+
 
     image = cv2.imread(sidepath)
     scale_percent = 20  # percent of original size

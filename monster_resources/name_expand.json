@@ -3,11 +3,11 @@
     "Divine ",
     "Shadar ",
     "Flayed ",
-    "Abhorrent ",
-    "Fell ",
     "Horned ",
-    "Elemental ",
-    "Chromatic "
+    "Winged ",
+    "Chromatic ",
+    "Arcane",
+    "Ancient"
   ],
 
   "enders": [
@@ -16,6 +16,10 @@
     " the Triumphant",
     " the Almighty",
     " the Ascendant",
-    " the Stupendous"
+    " the Stupendous",
+    " the Assured",
+    " the Instinctive",
+    " the Ancient one",
+    " the Expendient"
   ]
 }
